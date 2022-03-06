@@ -1,7 +1,11 @@
+import { Banner } from "../components/Banner";
+import { Header } from "../components/Header";
+
 export default function Home() {
   return (
-    <h1>
-      WorldTrip
-    </h1>
+    <>
+      <Header />
+      <Banner />
+    </>
   )
 }
