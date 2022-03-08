@@ -14,7 +14,7 @@ export function Banner() {
         my="6"
         maxWidth={1240}
         mx="auto"
-        px="6"
+        px={["0","6"]}
         justifyContent="space-between"
         alignContent="center"
         position="relative"
