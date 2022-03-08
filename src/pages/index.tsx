@@ -10,6 +10,7 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import Head from "next/head";
 import { Banner } from "../components/Banner";
 import { Header } from "../components/Header";
 import HomeSlider from "../components/HomeSlider";
@@ -29,6 +30,11 @@ export default function Home() {
   
   return (
     <Box>
+      
+      <Head>
+        <title>Home | World Trip</title>
+      </Head>
+
       <Header />
 
       <Banner />

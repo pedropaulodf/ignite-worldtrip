@@ -15,7 +15,7 @@ export function TravelTypesSection() {
       position="relative"
     >
       <Grid
-        templateColumns={["repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(5, 1fr)"]}
+        templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(5, 1fr)"]}
         gap={6}
         w="100%"
       >
@@ -31,7 +31,7 @@ export function TravelTypesSection() {
         <GridItem w="100%">
           <TravelTypesBox title="clássico" imageName="museumIcon.svg" />
         </GridItem>
-        <GridItem w="100%" colSpan={[2, 1]}>
+        <GridItem w="100%" colSpan={[2, 2, 1]}>
           <TravelTypesBox title="e mais..." imageName="earthIcon.svg" />
         </GridItem>
       </Grid>

@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Header } from "../../components/Header";
 import { Button } from "@chakra-ui/react";
+import Head from "next/head";
 
 interface ContinentProps {
   continent: {
@@ -13,6 +14,9 @@ export default function Continent({ continent }: ContinentProps) {
 
   return (
     <>
+      <Head>
+        <title>{slug} | World Trip</title>
+      </Head>
       <Header showBackButton />
       <h1>{slug}</h1>
     </>
