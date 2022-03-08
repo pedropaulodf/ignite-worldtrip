@@ -37,8 +37,10 @@ export default function Continent({ continent }: ContinentProps) {
       <Header showBackButton />
 
       <Flex
-        bgImage="url('/images/bgHome.jpg')"
+        as="image"
+        bgImage="url('/images/bgSingle.jpg')"
         bgSize="cover"
+        bgPosition="center"
         h={["200", "400", "500"]}
         justifyContent="center"
       >

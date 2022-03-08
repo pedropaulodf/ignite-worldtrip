@@ -2,8 +2,10 @@ import { Box, Flex, Image, SimpleGrid, Text } from "@chakra-ui/react";
 export function Banner() {
   return (
     <Flex
+      as="image"
       bgImage="url('/images/bgHome.jpg')"
       bgSize="cover"
+      bgPosition="center"
       h="335"
       gap="4"
       p="6"
