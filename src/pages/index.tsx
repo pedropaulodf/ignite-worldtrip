@@ -51,10 +51,11 @@ export default function Home() {
         />
       </Flex>
 
-      <Flex justifyContent="center" textAlign="center" mt="12">
-        <Text fontSize={["2xl", "4xl"]} fontWeight="500">
+      <Flex justifyContent="center" textAlign="center" mt="12" flexDirection="column">
+        <Text fontSize={["2xl", "4xl"]} fontWeight="700">
           Vamos nessa?
-          <br />
+        </Text>
+        <Text fontSize={["xl", "4xl"]} fontWeight="500" p="2">
           Então escolha seu continente
         </Text>
       </Flex>
