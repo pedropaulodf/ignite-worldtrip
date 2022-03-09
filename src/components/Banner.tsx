@@ -42,6 +42,7 @@ export function Banner() {
             w={["200px", "200px", "300px", "417px"]}
             mb="-32"
             display={["none", "none", "block"]}
+            className="slide-tl"
           />
         </Flex>
       </Flex>

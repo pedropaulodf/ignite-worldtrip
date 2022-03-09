@@ -29,6 +29,7 @@ export function CityCard({ city }: CityCardProps) {
           height="200"
           bgSize="cover"
           bgPosition="center"
+          objectFit="cover"
         />
 
         <Flex justifyContent="space-between" alignItems="center">
@@ -46,7 +47,7 @@ export function CityCard({ city }: CityCardProps) {
           </Box>
           <Box pr="6">
             <Image
-              src={`${city.cardImageUrl}`}
+              src={`${city.countryFlagImageUrl}`}
               alt={city.cityName}
               w="10"
               h="10"
@@ -54,6 +55,8 @@ export function CityCard({ city }: CityCardProps) {
               bgSize="cover"
               bgPosition="center"
               borderRadius="full"
+              objectFit="cover"
+              border="1px solid #00000024"
             />
           </Box>
         </Flex>
