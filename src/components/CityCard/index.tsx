@@ -27,7 +27,7 @@ export function CityCard({ city }: CityCardProps) {
         <Image
           src={`${city.cardImageUrl}`}
           alt={city.cityName}
-          height="200"
+          minHeight="220"
           bgSize="cover"
           bgPosition="center"
           objectFit="cover"
