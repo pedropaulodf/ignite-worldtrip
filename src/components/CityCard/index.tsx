@@ -15,6 +15,7 @@ export function CityCard({ city }: CityCardProps) {
       <Box
         borderWidth="1px"
         borderColor="#FFE193"
+        bg="white"
         borderRadius="lg"
         overflow="hidden"
         transition="all 0.2s"
