@@ -29,7 +29,7 @@ export default function Home() {
   };
   
   return (
-    <Box>
+    <>
       
       <Head>
         <title>Home | World Trip</title>
@@ -51,7 +51,7 @@ export default function Home() {
         />
       </Flex>
 
-      <Flex justifyContent="center" textAlign="center" mt="12" flexDirection="column">
+      <Flex flexDirection="column" alignItems="center" textAlign="center" mt="12">
         <Text fontSize={["2xl", "4xl"]} fontWeight="700">
           Vamos nessa?
         </Text>
@@ -61,6 +61,6 @@ export default function Home() {
       </Flex>
 
       <HomeSlider sliders={data.sliders} />
-    </Box>
+    </>
   );
 }

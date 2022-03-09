@@ -3,9 +3,13 @@ import { Header } from "../../components/Header";
 import {
   Box,
   Button,
+  Center,
   Flex,
+  Grid,
+  GridItem,
   HStack,
   Icon,
+  Image,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -20,25 +24,41 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import { InfoOutlineIcon } from "@chakra-ui/icons";
+import { CityCard } from "../../components/CityCard";
 interface ContinentProps {
   continent: {
-    slug: string;
+    name: string;
+    description: string;
+    heroImageUrl: string;
+    infos: {
+      countries: number;
+      languages: number;
+      cities100Plus: number;
+    };
+    cities100Plus: Cities100PlusProps[];
   };
 }
 
+interface Cities100PlusProps {
+  country: string;
+  cityName: string;
+  cardImageUrl: string;
+  countryFlagImageUrl: string;
+}
+
 export default function Continent({ continent }: ContinentProps) {
-  const { slug } = continent;
+  const { name, description, heroImageUrl, infos, cities100Plus } = continent;
 
   return (
     <>
       <Head>
-        <title>{slug} | World Trip</title>
+        <title>{name} | World Trip</title>
       </Head>
       <Header showBackButton />
 
       <Flex
         as="image"
-        bgImage="url('/images/bgSingle.jpg')"
+        bgImage={`url('${heroImageUrl}')`}
         bgSize="cover"
         bgPosition="center"
         h={["200", "400", "500"]}
@@ -55,7 +75,7 @@ export default function Continent({ continent }: ContinentProps) {
           position="relative"
         >
           <Text fontSize={["3xl", "4xl"]} color="white.50" fontWeight="700">
-            {slug}
+            {name}
           </Text>
         </Flex>
       </Flex>
@@ -72,17 +92,11 @@ export default function Continent({ continent }: ContinentProps) {
         gap={["8", "12"]}
         flexDirection={["column", "column", "row"]}
       >
-        <Text
-          fontSize={["lg", "xl"]}
-          color="black.50"
-          textAlign="justify"
-          width="100%"
-        >
-          A Europa é, por convenção, um dos seis continentes do mundo.
-          Compreendendo a península ocidental da Eurásia, a Europa geralmente
-          divide-se da Ásia a leste pela divisória de águas dos montes Urais, o
-          rio Ural, o mar Cáspio, o Cáucaso, e o mar Negro a sudeste
-        </Text>
+        <Box width="100%">
+          <Text fontSize={["lg", "xl"]} color="black.50" textAlign="justify">
+            {description}
+          </Text>
+        </Box>
         <HStack
           spacing={["6", "12"]}
           width={["100%", "100%", "70%"]}
@@ -90,7 +104,7 @@ export default function Continent({ continent }: ContinentProps) {
         >
           <VStack spacing={[-1, -1.5]} alignItems={["flex-start", "center"]}>
             <Text color="yellow.900" fontWeight="600" fontSize={["3xl", "5xl"]}>
-              50
+              {infos.countries}
             </Text>
             <Text
               color="black.50"
@@ -102,7 +116,7 @@ export default function Continent({ continent }: ContinentProps) {
           </VStack>
           <VStack spacing={[-1, -1.5]} alignItems={["flex-start", "center"]}>
             <Text color="yellow.900" fontWeight="600" fontSize={["3xl", "5xl"]}>
-              60
+              {infos.languages}
             </Text>
             <Text
               color="black.50"
@@ -114,7 +128,7 @@ export default function Continent({ continent }: ContinentProps) {
           </VStack>
           <VStack spacing={[-1, -1.5]} alignItems={["flex-start", "center"]}>
             <Text color="yellow.900" fontWeight="600" fontSize={["3xl", "5xl"]}>
-              27
+              {infos.cities100Plus}
             </Text>
             <Text
               color="black.50"
@@ -131,22 +145,22 @@ export default function Continent({ continent }: ContinentProps) {
                     bg="gray.300"
                     color="black"
                   > */}
-                    <InfoOutlineIcon
-                      ml="3"
-                      color="#C7C9C9"
-                      _hover={{ cursor: "pointer" }}
-                    />
+                  <InfoOutlineIcon
+                    ml="2"
+                    color="#C7C9C9"
+                    _hover={{ cursor: "pointer" }}
+                  />
                   {/* </Tooltip> */}
                 </PopoverTrigger>
                 <PopoverContent bg="white">
                   <PopoverHeader fontWeight="semibold" fontSize="md">
-                    Popover placement
+                    As cidades +100
                   </PopoverHeader>
-                  <PopoverArrow  bg="white"/>
+                  <PopoverArrow bg="white" />
                   <PopoverCloseButton />
                   <PopoverBody fontSize="md" fontWeight="normal">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore.
+                    As cidades +100 são as cidades esse continente possui que
+                    estão entre as 100 cidades mais visitadas do mundo!
                   </PopoverBody>
                 </PopoverContent>
               </Popover>
@@ -168,6 +182,28 @@ export default function Continent({ continent }: ContinentProps) {
         <Text fontSize={["xl", "3xl"]} color="black.50" fontWeight="700">
           Cidades +100
         </Text>
+      </Flex>
+
+      <Flex
+        w="100%"
+        my="12"
+        maxWidth={1240}
+        mx="auto"
+        px={"6"}
+        justifyContent="flex-start"
+        alignItems="flex-end"
+        position="relative"
+        gap="6"
+      >
+        <SimpleGrid
+          gap={[6,12]}
+          w="100%"
+          minChildWidth="250px"
+        >
+          {cities100Plus.map((city, index) => (
+            <CityCard key={index} city={city} />
+          ))}
+        </SimpleGrid>
       </Flex>
     </>
   );
@@ -194,9 +230,314 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug } = params;
 
-  const continent = {
-    slug,
-  };
+  let continent = {};
+
+  switch (slug) {
+    case "asia":
+      continent = {
+        name: "Asia",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id lacinia turpis. Donec ut consectetur ante. In blandit, leo sed imperdiet pellentesque, elit purus tempor ex, ut ultrices ipsum felis ut neque. Donec eu semper orci. Suspendisse mattis tempus sodales. Aliquam consectetur arcu in efficitur rutrum. In nec neque quis nulla tempus tristique. Aenean id leo non ex porta aliquet nec ut ligula.",
+        heroImageUrl: "/images/bgSingle.jpg",
+        infos: {
+          countries: 50,
+          languages: 60,
+          cities100Plus: 27,
+        },
+        cities100Plus: [
+          {
+            country: "Reino Unido",
+            cityName: "Londres",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "França",
+            cityName: "Paris",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Itália",
+            cityName: "Roma",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "República Tcheca",
+            cityName: "Praga",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Holanda",
+            cityName: "Amsterdã",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+        ],
+      };
+      break;
+
+    case "europe":
+      continent = {
+        name: "Europa",
+        description:
+          "A Europa é, por convenção, um dos seis continentes do mundo. Compreendendo a península ocidental da Eurásia, a Europa geralmente divide-se da Ásia a leste pela divisória de águas dos montes Urais, o rio Ural, o mar Cáspio, o Cáucaso, e o mar Negro a sudeste.",
+        heroImageUrl: "/images/bgSingle.jpg",
+        infos: {
+          countries: 50,
+          languages: 60,
+          cities100Plus: 27,
+        },
+        cities100Plus: [
+          {
+            country: "Reino Unido",
+            cityName: "Londres",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "França",
+            cityName: "Paris",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Itália",
+            cityName: "Roma",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "República Tcheca",
+            cityName: "Praga",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Holanda",
+            cityName: "Amsterdã",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+        ],
+      };
+      break;
+
+    case "north-america":
+      continent = {
+        name: "América do Norte",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id lacinia turpis. Donec ut consectetur ante. In blandit, leo sed imperdiet pellentesque, elit purus tempor ex, ut ultrices ipsum felis ut neque. Donec eu semper orci. Suspendisse mattis tempus sodales. Aliquam consectetur arcu in efficitur rutrum. In nec neque quis nulla tempus tristique. Aenean id leo non ex porta aliquet nec ut ligula.",
+        heroImageUrl: "/images/bgSingle.jpg",
+        infos: {
+          countries: 55,
+          languages: 35,
+          cities100Plus: 28,
+        },
+        cities100Plus: [
+          {
+            country: "Reino Unido",
+            cityName: "Londres",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "França",
+            cityName: "Paris",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Itália",
+            cityName: "Roma",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "República Tcheca",
+            cityName: "Praga",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Holanda",
+            cityName: "Amsterdã",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+        ],
+      };
+      break;
+
+    case "south-america":
+      continent = {
+        name: "América do Sul",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id lacinia turpis. Donec ut consectetur ante. In blandit, leo sed imperdiet pellentesque, elit purus tempor ex, ut ultrices ipsum felis ut neque.",
+        heroImageUrl: "/images/bgSingle.jpg",
+        infos: {
+          countries: 12,
+          languages: 101,
+          cities100Plus: 15,
+        },
+        cities100Plus: [
+          {
+            country: "Reino Unido",
+            cityName: "Londres",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "França",
+            cityName: "Paris",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Itália",
+            cityName: "Roma",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "República Tcheca",
+            cityName: "Praga",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Holanda",
+            cityName: "Amsterdã",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+        ],
+      };
+      break;
+
+    case "oceania":
+      continent = {
+        name: "Oceania",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id lacinia turpis. Donec ut consectetur ante. In blandit, leo sed imperdiet pellentesque, elit purus tempor ex, ut ultrices ipsum felis ut neque.",
+        heroImageUrl: "/images/bgSingle.jpg",
+        infos: {
+          countries: 25,
+          languages: 56,
+          cities100Plus: 17,
+        },
+        cities100Plus: [
+          {
+            country: "Reino Unido",
+            cityName: "Londres",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "França",
+            cityName: "Paris",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Itália",
+            cityName: "Roma",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "República Tcheca",
+            cityName: "Praga",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Holanda",
+            cityName: "Amsterdã",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Reino Unido",
+            cityName: "Londres",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "França",
+            cityName: "Paris",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Itália",
+            cityName: "Roma",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "República Tcheca",
+            cityName: "Praga",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Holanda",
+            cityName: "Amsterdã",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Reino Unido",
+            cityName: "Londres",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "França",
+            cityName: "Paris",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Itália",
+            cityName: "Roma",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "República Tcheca",
+            cityName: "Praga",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+          {
+            country: "Holanda",
+            cityName: "Amsterdã",
+            cardImageUrl: "/images/bgSingle.jpg",
+            countryFlagImageUrl: "/images/bgSingle.jpg",
+          },
+        ],
+      };
+      break;
+
+    default:
+      continent = {
+        name: "Continente",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id lacinia turpis. Donec ut consectetur ante. In blandit, leo sed imperdiet pellentesque, elit purus tempor ex, ut ultrices ipsum felis ut neque. Donec eu semper orci. Suspendisse mattis tempus sodales. Aliquam consectetur arcu in efficitur rutrum. In nec neque quis nulla tempus tristique. Aenean id leo non ex porta aliquet nec ut ligula.",
+        heroImageUrl: "/images/bgSingle.jpg",
+        infos: {
+          countries: 0,
+          languages: 0,
+          cities100Plus: 0,
+        },
+        cities100Plus: [],
+      };
+      break;
+  }
 
   return {
     props: {
