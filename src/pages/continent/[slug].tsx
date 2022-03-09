@@ -98,7 +98,7 @@ export default function Continent({ continent }: ContinentProps) {
           </Text>
         </Box>
         <HStack
-          spacing={["6", "12"]}
+          spacing={["4", "12"]}
           width={["100%", "100%", "70%"]}
           justifyContent={["flex-start", "flex-start", "center"]}
         >
