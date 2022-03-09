@@ -13,7 +13,7 @@ A aplicação foi desenvolvida do zero utilizando typescript com o Chakra UI, Ne
 ### Ver projetos: 
 
 [<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">](https://www.figma.com/file/MuwUZzq9EsjARIqRlRUxri/Desafio-1-M%C3%B3dulo-4-ReactJS-(Copy))
-[<img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white">](ignite-worldtrip-one.vercel.app/)
+[<img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white">](https://ignite-worldtrip-one.vercel.app/)
 
 ## 🚀 Tecnologias 
 -   [x] Next.js com SSG
